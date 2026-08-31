@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# 개인 로드맵 계획 문서 (비공개)
+planning/
+
+# 논문 원문 PDF (저작권 문제 소지)
+papers/sources/*.pdf
+
+AGENTS.md
+HANDOVER_TO_CHATGPT.md

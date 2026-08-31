@@ -1,0 +1,13 @@
+# 로컬 실행용 기본 패키지 (week01-03 노트북 기준)
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+scikit-learn
+jupyter
+ipykernel
+
+# .env 로딩 + OpenAI API 사용 (week04+ 예정)
+python-dotenv
+openai

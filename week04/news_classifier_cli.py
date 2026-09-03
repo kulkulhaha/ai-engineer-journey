@@ -31,6 +31,7 @@ def news_classifier_cli(url:str="http://newsrss.bbc.co.uk/rss/newsonline_uk_edit
 
 def safe_summarize_and_classify(client, title: str, text: str, categories: list[str], retries=3)-> dict:
     result = None
+    attempts = 1
     try:
         result = summarize_and_classify(client, title, text, categories)
     except openai.AuthenticationError as e:
@@ -38,13 +39,21 @@ def safe_summarize_and_classify(client, title: str, text: str, categories: list[
         sys.exit(1)
     except openai.RateLimitError:
         if retries > 0:
-            time.sleep(10)
-            result = safe_summarize_and_classify(client, title, text, categories,retries-1)
+            for attempt in range(attempts):
+                time.sleep(2**attempt)
+                attempt += 1
+                result = safe_summarize_and_classify(client, title, text, categories,retries-1)
         else:
             print("failed - try later")
     except openai.APIError:
         result = {"title": title, "summary": None, "category": "Error"}
 
     return result
+result = news_classifier_cli(url, limit)
 
-print(news_classifier_cli(url, limit))
+import json
+from datetime import datetime
+point = datetime.now().isoformat()
+results = {"timestamp":point, "results":result}
+with open(f"articles_{datetime.now().strftime("%Y%m%d_%H%M%S")}", "w", encoding="utf-8") as f:
+    json.dump(results, f, ensure_ascii=False, indent=4)

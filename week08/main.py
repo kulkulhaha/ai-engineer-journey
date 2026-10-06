@@ -4,18 +4,9 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 import pandas as pd
 
-MODEL_PATH = (Path(__file__).parent.parent / "week07" / "model.json").resolve()
+MODEL_PATH = (Path(__file__).parent/ "model.json").resolve()
 
 load_model_once(MODEL_PATH)
-
-app = FastAPI()
-
-@app.get('/health')
-def health():
-    info = load_model_once(MODEL_PATH)
-    return {'status':'ok','model_version':info['model_version']}
-
-# week08/main.py
 
 class PredictRequest(BaseModel):
     """
@@ -40,7 +31,15 @@ class PredictResponse(BaseModel):
     labels: list[int]
     model_version: str
 
-@app.post('/predict')
+app = FastAPI()
+
+@app.get('/health')
+def health():
+    info = load_model_once(MODEL_PATH)
+    return {'status':'ok','model_version':info['model_version']}
+
+
+@app.post('/predict', response_model=PredictResponse)
 def predict(request: PredictRequest):
     df = pd.DataFrame(request.rows)
     model = load_model_once(MODEL_PATH)
@@ -51,4 +50,4 @@ def predict(request: PredictRequest):
     response = PredictResponse(probabilities=result, labels=(result >= model['threshold']), model_version=model['model_version']) 
     return response
 
-    
+# rebuild timing test 1

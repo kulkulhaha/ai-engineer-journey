@@ -61,7 +61,7 @@ uvicorn main:app --reload
 - [X] `0.0.0.0` 바인딩을 빼면 접속이 안 되는 것을 직접 확인
 - [X] 서빙 경로 복잡도 표 + `n` 대 시간 로그-로그 그래프, 큰 `n`에서 기울기 ≈ 1
 - [X] `2/L`과 실제 발산 학습률 비교 표
-- [ ] `week08/block_a_math_check.md`에 6개 항목 상태 기록
+- [X] `week08/block_a_math_check.md`에 6개 항목 상태 기록
 - [ ] IELTS 스피킹·라이팅 루틴 요일·시각 확정 + 첫 녹음 1회
 - [ ] 알고리즘 2문제 + 재풀이 1문제 상태 기록
 - [ ] Seq2Seq 리뷰 노트 `papers/2014-seq2seq.md`
